@@ -1,1 +1,1 @@
-My name is John Konecny
+This is my assignment-1 submission!
