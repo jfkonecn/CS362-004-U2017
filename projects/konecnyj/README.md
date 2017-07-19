@@ -1,1 +1,1 @@
-My name is John Konecny
+This is my quiz-2 submission!
