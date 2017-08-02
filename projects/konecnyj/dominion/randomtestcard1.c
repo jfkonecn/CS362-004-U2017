@@ -153,7 +153,7 @@ void checkMine(struct gameState* pre)
 			sprintf(buffer, "Player %d: trash treasure card is now a treasure card player chose card", i + 1);	
 			asserttrue(post.hand[i][handpos] == randGetCard, buffer);
 			sprintf(buffer, "Player %d: Total card in hand is correct", i + 1);				
-			asserttrue(post.handCount[i] == (*pre).handCount[i], buffer);
+			asserttrue(post.handCount[i] + 1 == (*pre).handCount[i], buffer);
 			
 			//check state of deck
 			sprintf(buffer, "Player %d: The current state of the deck is the same as before cards were added to the deck", i + 1);

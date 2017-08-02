@@ -1,0 +1,18 @@
+1. Gold card does not count as treasure card in adventurer card code
+Description:
+If a gold card is drawn by a player then the card is placed in the player's hand
+Replication:
+This bug occurs when a gold card is the first or second treasure card drawn
+from the player's deck is a gold card.
+
+2. Adventure card is not discarded after being played
+Description:
+Adventure card remains in player's hand after being played
+Replication:
+This bug occurs anytime the adventure card is played
+
+3. Smithy does not add 3 cards to player’s hand
+Description:
+No cards are drawn from the deck when smithy is played
+Replication:
+This bug occurs anytime the smithy card is played

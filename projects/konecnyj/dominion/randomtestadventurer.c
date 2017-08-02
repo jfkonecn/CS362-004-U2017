@@ -58,7 +58,7 @@ void checkAdventurer(struct gameState* pre)
 	printDiscard((*pre).whoseTurn, &post);
 	printPlayed((*pre).whoseTurn, &post);
 	*/
-	asserttrue(playAdventurer(&post) == 0, "playAdventurer returns 0");
+	asserttrue(playAdventurer(&post, handpos) == 0, "playAdventurer returns 0");
 	/*
 	printHand((*pre).whoseTurn, &post);
 	printDeck((*pre).whoseTurn, &post);
@@ -66,37 +66,21 @@ void checkAdventurer(struct gameState* pre)
 	printPlayed((*pre).whoseTurn, &post);
 	*/
 	//total cards taken from the deck
-	int cardsTaken = post.deckCount[(*pre).whoseTurn] - (*pre).deckCount[(*pre).whoseTurn];
+	int cardsTaken = (*pre).deckCount[(*pre).whoseTurn] - post.deckCount[(*pre).whoseTurn];
 
 	asserttrue(memcmp((*pre).playedCards, post.playedCards, (*pre).playedCardCount * sizeof(int)) == 0,  "All cards which were in the played pile originally are still there in the same order");
 	//check played card state
-	if(cardsTaken - 2 < 0)
-	{
-		sprintf(buffer, "Played cards has added %d cards", 1);
-		asserttrue((*pre).playedCardCount == post.playedCardCount,  buffer);
-	}
-	else
-	{
-		sprintf(buffer, "Played cards has added %d cards", cardsTaken - 1);
-		asserttrue((*pre).playedCardCount == post.playedCardCount - (cardsTaken - 1),  buffer);
-	}
-			
-	
-	
 
+	
+	
+	sprintf(buffer, "Played cards has added 1 card");
+	asserttrue((*pre).playedCardCount == post.playedCardCount - 1,  buffer);
+	sprintf(buffer, "Played card is adventurer");
+	asserttrue( post.playedCards[(*pre).playedCardCount] == adventurer,  buffer);
+
+
+	
 	int i = 0;
-	
-	for( i = (*pre).playedCardCount - 1 ; i < post.playedCardCount; i++)
-	{
-		if(isTreasureCard(post.playedCards[i]))
-		{
-			break;
-		}
-	}
-	
-	asserttrue(i == post.playedCardCount, "Played cards are not treasure cards");
-	
-	
 	
 	for( i = 0; i < post.numPlayers; i++)
 	{
@@ -117,13 +101,31 @@ void checkAdventurer(struct gameState* pre)
 			asserttrue(isTreasureCard(post.hand[i][handpos]) && isTreasureCard(post.hand[i][handpos + 1]), buffer);
 
 			sprintf(buffer, "Player %d: Only two cards added", i + 1);			
-			asserttrue(isTreasureCard(post.handCount[i] == (*pre).handCount[i] + 1), buffer);
+			asserttrue(post.handCount[i] == (*pre).handCount[i] + 1, buffer);
 
 			//check state of discard
-			sprintf(buffer, "Player %d: Discard is unchanged", i + 1);				
-			asserttrue(memcmp((*pre).discard[i], post.discard[i], MAX_HAND * sizeof(int)) == 0,  buffer);
-			sprintf(buffer, "Player %d: Discard count is unchanged", i + 1);	
-			asserttrue((*pre).discardCount[i] == post.discardCount[i],  buffer);
+			sprintf(buffer, "Player %d: All old cards in discard are still there", i + 1);				
+			asserttrue(memcmp((*pre).discard[i], post.discard[i], (*pre).discardCount[i] * sizeof(int)) == 0,  buffer);
+			sprintf(buffer, "Player %d: Discard count has added %d cards", i + 1, cardsTaken - (post.handCount[i] - (*pre).handCount[i] + 1));	
+			asserttrue((*pre).discardCount[i] == post.discardCount[i] - cardsTaken + (post.handCount[i] - (*pre).handCount[i] + 1),  buffer);
+			int j = 0;
+	
+			for( j = (*pre).discardCount[i] ; j < post.discardCount[i] ; j++)
+			{
+				if(isTreasureCard(post.discard[i][j]))
+				{
+					break;
+				}
+			}
+
+			sprintf(buffer, "Player %d: All discard cards are not treasure cards", i + 1);	
+			asserttrue(j == post.discardCount[i], buffer);
+		
+			
+			
+			
+			
+			
 		}
 		else
 		{

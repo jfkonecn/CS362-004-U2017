@@ -652,7 +652,7 @@ int getCost(int cardNumber)
 * Reveal cards from your deck until you reveal 2 Treasure cards. 
 * Put those Treasure cards into your hand and discard the other revealed cards.
 ****************************************************************************************************************/
-int playAdventurer(struct gameState *state)
+int playAdventurer(struct gameState *state, int handPos)
 {
 	//added these ints for refactoring
 	int drawntreasure = 0;
@@ -664,7 +664,7 @@ int playAdventurer(struct gameState *state)
 	//loop until play draws 2 treasure cards
 	//BUG PLACED HERE: 
 	//WAS: while(drawntreasure < 2) 
-	while(drawntreasure <= 2){
+	while(drawntreasure < 2){
 		
 		if (state->deckCount[currentPlayer] < 1) //if the deck is empty we need to shuffle discard and add to deck
 		{
@@ -676,7 +676,7 @@ int playAdventurer(struct gameState *state)
 		
 		//BUG PLACED HERE: 
 		//WAS: if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
-		if (cardDrawn = copper || cardDrawn == silver || cardDrawn == gold)
+		if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
 		{
 			drawntreasure++;
 		}			
@@ -695,7 +695,7 @@ int playAdventurer(struct gameState *state)
     }
 	
 	//possible bug: never discards adventurer card
-	
+	discardCard(handPos, currentPlayer, state, 0);
 	return 0;
 }
 
@@ -711,7 +711,7 @@ int playSmithy(struct gameState *state, int handPos)
 	//+3 Cards
 	//BUG PLACED HERE: 
 	//WAS: for (i = 0; i < 3; i++)
-    for (i = 1; i < 3; i++)
+    for (i = 0; i < 3; i++)
 	{
 		drawCard(currentPlayer, state);
 	}
@@ -740,7 +740,7 @@ int playMine(struct gameState *state, int choice1, int choice2, int handPos)
 	
 	//Possible pre-existing bug?
 	//should be (choice2 > gold || choice2 < copper)
-    if (choice2 > treasure_map || choice2 < curse)
+    if (choice2 > gold || choice2 < copper)
 	{
 		return -1;
 	}
@@ -755,7 +755,7 @@ int playMine(struct gameState *state, int choice1, int choice2, int handPos)
     //discard card from hand
 	//BUG PLACED HERE: 
 	//WAS: discardCard(handPos, currentPlayer, state, 0);
-    discardCard(handPos, currentPlayer, state, 1);
+    discardCard(handPos, currentPlayer, state, 0);
 
     //discard trashed card
     for (i = 0; i < state->handCount[currentPlayer]; i++)
@@ -764,7 +764,8 @@ int playMine(struct gameState *state, int choice1, int choice2, int handPos)
 	    {
 			//possible bug:
 			//should be: discardCard(i, currentPlayer, state, 1);
-			discardCard(i, currentPlayer, state, 0);			
+			//WAS: discardCard(i, currentPlayer, state, 0);
+			discardCard(i, currentPlayer, state, 1);			
 			break;
 	    }
 	}
@@ -796,7 +797,7 @@ int playEmbargo(struct gameState *state, int choice1, int handPos)
 	//trash card
 	//BUG PLACED HERE:
 	//WAS: discardCard(handPos, currentPlayer, state, 1);
-	discardCard(handPos, currentPlayer, state, 0);		
+	discardCard(handPos, currentPlayer, state, 1);		
 	return 0;
 }
 
@@ -845,7 +846,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     {
     case adventurer:
 
-	  return playAdventurer(state);
+	  return playAdventurer(state, handPos);
 			
     case council_room:
       //+4 Cards

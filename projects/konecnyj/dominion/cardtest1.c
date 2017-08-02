@@ -72,23 +72,24 @@ int main (int argc, char** argv) {
 	gainCard(gold, &post, 1, 0);
 	gainCard(smithy, &post, 1, 0);
 	gainCard(smithy, &post, 1, 0);
-	
 
-
-	//printHand(0, &post);
-	//printDeck(0, &post);
-	//printDiscard(0, &post);
-	//printPlayed(0, &post);
-	asserttrue(playAdventurer(&post) == 0, "playAdventurer returns 0");
-	//printHand(0, &post);
-	//printDeck(0, &post);
-	//printDiscard(0, &post);
-	//printPlayed(0, &post);
+	/*
+	printHand(0, &post);
+	printDeck(0, &post);
+	printDiscard(0, &post);
+	printPlayed(0, &post);
+	*/
+	asserttrue(playAdventurer(&post, handpos) == 0, "playAdventurer returns 0");
+	/*
+	printHand(0, &post);
+	printDeck(0, &post);
+	printDiscard(0, &post);
+	printPlayed(0, &post);
+	*/
 	
 	//check played card state
 	asserttrue(memcmp(pre.playedCards, post.playedCards, pre.playedCardCount * sizeof(int)) == 0,  "All cards which were in the played pile originally are still there in the same order");
-	asserttrue(pre.playedCardCount == post.playedCardCount - 2,  "Played cards has added two cards");
-	asserttrue(post.playedCards[pre.playedCardCount] == smithy && post.playedCards[pre.playedCardCount + 1] == smithy, "Played cards are both smithy");
+	asserttrue(pre.playedCardCount == post.playedCardCount - 1,  "Played cards has added one card");
 	
 	//player 1 state check
 	//check the state of the hand
@@ -97,16 +98,17 @@ int main (int argc, char** argv) {
 		//since the test was failed, the added treasure cards are offset by 1
 		handpos++;
 	}	
-	asserttrue(isTreasureCard(post.hand[0][handpos]) && isTreasureCard(post.hand[0][handpos + 1]), "Player 1: Two treasure cards added");	
-	asserttrue(isTreasureCard(post.handCount[0] == pre.handCount[0] + 2), "Player 1: Only two cards added");
+	asserttrue(isTreasureCard(post.hand[0][handpos]) && isTreasureCard(post.hand[0][handpos + 1]), "Player 1: Two treasure cards added");
+	asserttrue(post.handCount[0] == pre.handCount[0] + 2, "Player 1: Only two cards added");
 	
 	//check state of deck
 	asserttrue(memcmp(pre.deck[0], post.deck[0], pre.deckCount[0] * sizeof(int)) == 0,  "Player 1: The current state of the deck is the same as before cards were added to the deck");
 	asserttrue(pre.deckCount[0] == post.deckCount[0],  "Player 1: Deck count is back to its precondition state");
 	
 	//check state of discard 
-	asserttrue(memcmp(pre.discard[0], post.discard[0], MAX_HAND * sizeof(int)) == 0,  "Player 1: Discard is unchanged");
-	asserttrue(pre.discardCount[0] == post.discardCount[0],  "Player 1: Discard count is unchanged");
+	asserttrue(memcmp(pre.discard[0], post.discard[0], pre.discardCount[0] * sizeof(int)) == 0,  "Player 1: All old cards in discard are still there");
+	asserttrue(pre.discardCount[0] == post.discardCount[0] - 2,  "Player 1: Discard count has 2 new cards");
+	asserttrue(post.discard[0][ pre.discardCount[0]] == smithy && post.discard[0][ pre.discardCount[0] + 1] == smithy, "Player 1: Discarded cards are both smithy");	
 		
 	//player 2 state check
 	asserttrue(memcmp(pre.hand[1], post.hand[1], MAX_HAND * sizeof(int)) == 0,  "Player 2: Hand is unchanged");

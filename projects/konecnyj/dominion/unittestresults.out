@@ -98,15 +98,15 @@ cardtest1: test playAdventurer function
 ***************************************
 TEST PASSED: playAdventurer returns 0 
 TEST PASSED: All cards which were in the played pile originally are still there in the same order 
-TEST FAILED: Played cards has added two cards 
-TEST FAILED: Played cards are both smithy 
-TEST FAILED: Player 1: Adventurer card is no longer in player's hand 
-TEST FAILED: Player 1: Two treasure cards added 
-TEST FAILED: Player 1: Only two cards added 
+TEST PASSED: Played cards has added one card 
+TEST PASSED: Player 1: Adventurer card is no longer in player's hand 
+TEST PASSED: Player 1: Two treasure cards added 
+TEST PASSED: Player 1: Only two cards added 
 TEST PASSED: Player 1: The current state of the deck is the same as before cards were added to the deck 
-TEST FAILED: Player 1: Deck count is back to its precondition state 
-TEST PASSED: Player 1: Discard is unchanged 
-TEST PASSED: Player 1: Discard count is unchanged 
+TEST PASSED: Player 1: Deck count is back to its precondition state 
+TEST PASSED: Player 1: All old cards in discard are still there 
+TEST PASSED: Player 1: Discard count has 2 new cards 
+TEST PASSED: Player 1: Discarded cards are both smithy 
 TEST PASSED: Player 2: Hand is unchanged 
 TEST PASSED: Player 2: Hand count is unchanged 
 TEST PASSED: Player 2: Deck is unchanged 
@@ -125,9 +125,9 @@ TEST PASSED: All cards which were in the played pile originally are still there 
 TEST PASSED: Played cards has added one card 
 TEST PASSED: Played card is smithy 
 TEST PASSED: Player 1: Smithy card is no longer in player's hand 
-TEST FAILED: Player 1: Only three cards added 
+TEST PASSED: Player 1: Only three cards added 
 TEST PASSED: Player 1: The same cards are still in deck minus the three removed 
-TEST FAILED: Player 1: Deck count has three less cards 
+TEST PASSED: Player 1: Deck count has three less cards 
 TEST PASSED: Player 1: Discard is unchanged 
 TEST PASSED: Player 1: Discard count is unchanged 
 TEST PASSED: Player 2: Hand is unchanged 
@@ -144,7 +144,7 @@ cardtest3: test playMine function
 TEST PASSED: playMine returns 0 
 TEST PASSED: All cards which were in the played pile originally are still there in the same order 
 TEST PASSED: Played cards has added one card 
-TEST FAILED: Played card is a mine card 
+TEST PASSED: Played card is a mine card 
 TEST PASSED: Player 1: Mine card is no longer in player's hand 
 TEST PASSED: Player 1: Copper card is now a Gold card 
 TEST PASSED: Player 1: Only one card added 
@@ -166,8 +166,8 @@ cardtest4: test playEmbargo function
 TEST PASSED: playMine returns 0 
 TEST PASSED: An embargo token is placed on mine 
 TEST PASSED: 2 coins added 
-TEST FAILED: Played cards are unchanged 
-TEST FAILED: Played card count is unchanged 
+TEST PASSED: Played cards are unchanged 
+TEST PASSED: Played card count is unchanged 
 TEST PASSED: Player 1: Embargo card is no longer in player's hand 
 TEST PASSED: Player 1: Card count in hand is equal to precondition state 
 TEST PASSED: Player 1: The current state of the deck is the same as before cards were added to the deck 
@@ -183,9 +183,9 @@ TEST PASSED: Player 2: Discard count is unchanged
 
 
 File 'dominion.c'
-Lines executed:31.56% of 564
-Branches executed:32.60% of 411
-Taken at least once:20.44% of 411
-Calls executed:23.00% of 100
+Lines executed:33.63% of 568
+Branches executed:33.57% of 417
+Taken at least once:23.98% of 417
+Calls executed:24.75% of 101
 Creating 'dominion.c.gcov'
 

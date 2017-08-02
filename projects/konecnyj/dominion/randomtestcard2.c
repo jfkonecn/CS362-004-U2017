@@ -79,21 +79,21 @@ void checkSmithy(struct gameState* pre)
 	struct gameState post;
 	memcpy (&post, pre, sizeof(struct gameState));
 	
-	/*
+	///*
 	printHand((*pre).whoseTurn, &post);
-	printDeck((*pre).whoseTurn, &post);
-	printDiscard((*pre).whoseTurn, &post);
-	printPlayed((*pre).whoseTurn, &post);
-	*/
+	//printDeck((*pre).whoseTurn, &post);
+	//printDiscard((*pre).whoseTurn, &post);
+	//printPlayed((*pre).whoseTurn, &post);
+	//*/
 
 	asserttrue(playSmithy(&post, handpos) == 0, "playSmithy returns 0");
 	
-	/*
+	///*
 	printHand((*pre).whoseTurn, &post);
-	printDeck((*pre).whoseTurn, &post);
-	printDiscard((*pre).whoseTurn, &post);
-	printPlayed((*pre).whoseTurn, &post);
-	*/
+	//printDeck((*pre).whoseTurn, &post);
+	//printDiscard((*pre).whoseTurn, &post);
+	//printPlayed((*pre).whoseTurn, &post);
+	//*/
 
 
 	//check played card state	
@@ -112,9 +112,9 @@ void checkSmithy(struct gameState* pre)
 			//current player state check
 			//check the state of the hand
 			sprintf(buffer, "Player %d: Smithy card is no longer in player's hand", i + 1);	
-			asserttrue(post.hand[0][handpos] != smithy, buffer);	
-			sprintf(buffer, "Player %d: Only three cards added", i + 1);	
-			asserttrue(post.handCount[0] == (*pre).handCount[0] + 2, buffer);
+			asserttrue(post.hand[i][handpos] != smithy, buffer);	
+			sprintf(buffer, "Player %d: Only three cards added", i + 1);
+			asserttrue(post.handCount[i] == (*pre).handCount[i] + 2, buffer);
 			
 			//check state of deck
 			sprintf(buffer, "Player %d: The same cards are still in deck minus the three removed", i + 1);
